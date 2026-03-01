@@ -2,115 +2,148 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import os
+from datetime import datetime
 
-# --- 1. POBIERANIE DANYCH ---
-def get_data():
-    data = {
-        'item_id': [101, 102, 103, 104, 105, 106, 107, 108, 109, 110],
-        'stock_count': [50, -5, 120, None, 80, 5000, 45, 55, 60, 65],
-        'category': ['Electronics', 'Home', 'Electronics', 'Toys', 'Home', 'Toys', 'Electronics', 'Electronics', 'Electronics', 'Electronics'],
-        'unit_price': [100, 20, 100, 15, 20, 10, 100, 105, 95, 90]
-    }
-    return pd.DataFrame(data)
+# --- 1. POBIERANIE DANYCH WEJŚCIOWYCH ---
+def get_data(file_path="dane_magazynowe.xlsx"):
+    """Wczytuje arkusz stanów magazynowych lub generuje szablon operacyjny."""
+    if os.path.exists(file_path):
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] INFO: Wczytywanie danych z pliku: {file_path}")
+        return pd.read_excel(file_path)
+    else:
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] ALERT: Brak pliku wejściowego. Generowanie szablonu...")
+        data = {
+            'item_id': [101, 102, 103, 104, 105],
+            'stock_count': [50, -5, 120, None, 5000],
+            'category': ['Electronics', 'Home', 'Electronics', 'Toys', 'Toys'],
+            'unit_price': [100, 20, 100, 15, 10]
+        }
+        df_template = pd.DataFrame(data)
+        df_template.to_excel(file_path, index=False)
+        print(f"[OK] Szablon 'dane_magazynowe.xlsx' został utworzony.")
+        return df_template
 
-# --- 2. ANALIZA I LOGIKA AUDYTU ---
+# --- 2. LOGIKA AUDYTU ICQA (Inventory Control & Quality Assurance) ---
 def audit_logic(df):
-    # Statystyka: Z-Score (wykrywa czy liczba "pasuje" do reszty w kategorii)
+    """Weryfikacja spójności danych i wykrywanie błędów w stanach."""
     def detect_z_score(group):
         std = group.std()
         return (group - group.mean()) / std if (pd.notna(std) and std != 0) else 0
 
     df['z_score'] = df.groupby('category')['stock_count'].transform(detect_z_score)
 
-    # Flagowanie błędów
     def check_row(row):
         issues = []
         val = row['stock_count']
-        if pd.isnull(val): issues.append("MISSING")
-        elif val < 0: issues.append("NEGATIVE")
-        elif abs(row['z_score']) > 1.5: issues.append("STAT_ANOMALY")
-        elif val > 1000: issues.append("OUTLIER")
-        return ", ".join(issues) if issues else "CLEAN"
+        if pd.isnull(val): issues.append("BRAK_DANYCH")
+        elif val < 0: issues.append("STAN_UJEMNY")
+        elif abs(row['z_score']) > 1.5: issues.append("ODCHYLENIE_STAT")
+        elif val > 1000: issues.append("NADSTAN")
+        return ", ".join(issues) if issues else "POPRAWNY"
 
     df['audit_status'] = df.apply(check_row, axis=1)
 
-    # Akcje biznesowe
+    # Definiowanie wymaganych działań operacyjnych
     df['required_action'] = df['audit_status'].apply(
-        lambda x: "URGENT_RECOUNT" if any(err in x for err in ["MISSING", "NEGATIVE"]) 
-        else ("SUPERVISOR_CHECK" if "ANOMALY" in x else "NONE")
+        lambda x: "PILNE: PRZELICZENIE" if any(err in x for err in ["BRAK_DANYCH", "STAN_UJEMNY"]) 
+        else ("WERYFIKACJA_KIEROWNICZA" if "ODCHYLENIE" in x else "BRAK")
     )
 
-    # Czyszczenie danych do analizy
+    # Przygotowanie danych do procesów analitycznych (czyszczenie)
     df['stock_cleaned'] = df.groupby('category')['stock_count'].transform(lambda x: x.fillna(x.median()))
     df.loc[df['stock_cleaned'] < 0, 'stock_cleaned'] = 0
     
     return df
 
-# --- 3. WIZUALIZACJA ---
-def visualize_anomalies(df):
-    plt.figure(figsize=(10, 6))
-    # Przygotowanie danych do wykresu (zastąpienie None zerem tylko dla osi Y)
-    plot_df = df.copy()
-    plot_df['stock_display'] = plot_df['stock_count'].fillna(0)
+# --- 3. ANALIZA WARTOŚCIOWA ABC ---
+def abc_analysis(df):
+    """Klasyfikacja asortymentu według kryterium Pareto (wartość zapasu)."""
+    df['total_value'] = df['stock_count'].fillna(0) * df['unit_price']
+    df = df.sort_values(by='total_value', ascending=False).reset_index(drop=True)
     
-    sns.scatterplot(data=plot_df, x='item_id', y='stock_display', hue='audit_status', 
-                    palette='viridis', size='stock_cleaned', sizes=(50, 300))
+    cumulative_value = df['total_value'].cumsum()
+    total_sum = df['total_value'].sum()
+    df['cumulative_percentage'] = (cumulative_value / total_sum * 100) if total_sum > 0 else 0
+
+    def classify_abc(percentage):
+        if percentage <= 80: return 'A (Kluczowe)'
+        elif percentage <= 95: return 'B (Średnie)'
+        else: return 'C (Niskie)'
+
+    df['abc_class'] = df['cumulative_percentage'].apply(classify_abc)
+    return df
+
+# --- 4. ANALIZA ROTACJI I TRENDÓW (DOH - Days on Hand) ---
+def trend_analysis(df):
+    """Prognozowanie dostępności zapasów na podstawie średniej sprzedaży."""
+    if 'daily_sales' not in df.columns:
+        # Symulacja średniej sprzedaży dziennej
+        df['daily_sales'] = np.random.uniform(1, 20, size=len(df))
     
-    plt.axhline(0, color='red', lw=1, ls='--')
-    plt.title("System ICQA: Wykrywanie anomalii w zapasach")
-    plt.grid(True, alpha=0.3)
-    plt.show()
+    # Obliczanie pokrycia zapasem (DOH)
+    df['days_on_hand'] = df['stock_cleaned'] / df['daily_sales']
     
-# --- 4. EKSPORT DO EXCELA Z FORMATOWANIEM ---
-def export_to_excel(df, filename="Raport_ICQA.xlsx"):
+    def detect_trend(row):
+        if row['days_on_hand'] < 5: return "RYZYKO_BRAKU"
+        elif row['days_on_hand'] > 180: return "MARTWY_ZAPAS"
+        else: return "OPTYMALNY"
+        
+    df['inventory_trend'] = df.apply(detect_trend, axis=1)
+    return df
+
+# --- 5. RAPORTOWANIE I EKSPORT ---
+def print_business_summary(df):
+    """Wyświetla podsumowanie KPI w konsoli."""
+    total_risk_val = df[df['audit_status'] != 'POPRAWNY']['risk_value'].sum()
+    issue_count = len(df[df['audit_status'] != 'POPRAWNY'])
+    
+    print("\n" + "="*50)
+    print("   RAPORT OPERACYJNY: KONTROLA ZAPASÓW")
+    print("="*50)
+    print(f"Liczba wykrytych nieścisłości:  {issue_count} pozycji")
+    print(f"Wartość zapasu objęta ryzykiem: {total_risk_val:,.2f} PLN")
+    print("-" * 50)
+
+def export_to_excel(df, filename="Raport_Magazynowy_Final.xlsx"):
+    """Zapisuje dane do pliku Excel z automatycznym formatowaniem warunkowym."""
     writer = pd.ExcelWriter(filename, engine='xlsxwriter')
-    df.to_excel(writer, sheet_name='Audyt', index=False)
+    df.to_excel(writer, sheet_name='Analiza_Audyt', index=False)
     
     workbook  = writer.book
-    worksheet = writer.sheets['Audyt']
+    worksheet = writer.sheets['Analiza_Audyt']
 
-    # Definiujemy formaty kolorów
-    red_format = workbook.add_format({'bg_color': '#FFC7CE', 'font_color': '#9C0006'})
-    orange_format = workbook.add_format({'bg_color': '#FFEB9C', 'font_color': '#9C6500'})
+    # Formaty kolorystyczne dla czytelności raportu
+    red_fmt = workbook.add_format({'bg_color': '#FFC7CE', 'font_color': '#9C0006'})
+    yellow_fmt = workbook.add_format({'bg_color': '#FFEB9C', 'font_color': '#9C6500'})
 
-    # Automatyczne kolorowanie wierszy na podstawie statusu
     for row_num in range(1, len(df) + 1):
         status = df.iloc[row_num-1]['audit_status']
-        if any(err in status for err in ["NEGATIVE", "MISSING"]):
-            worksheet.set_row(row_num, None, red_format)
-        elif "ANOMALY" in status:
-            worksheet.set_row(row_num, None, orange_format)
+        if any(err in status for err in ["BRAK", "UJEMNY"]):
+            worksheet.set_row(row_num, None, red_fmt)
+        elif "ODCHYLENIE" in status:
+            worksheet.set_row(row_num, None, yellow_fmt)
 
     writer.close()
-    print(f"\n[SUKCES] Raport został zapisany jako: {filename}")
+    print(f"\n[SUKCES] Raport końcowy wygenerowany: {filename}")
 
-# --- 5. PODSUMOWANIE DLA MANAGERA ---
-def print_business_summary(df):
-    total_risk = df[df['audit_status'] != 'CLEAN']['risk_value'].sum()
-    issue_count = len(df[df['audit_status'] != 'CLEAN'])
-    
-    print("-" * 30)
-    print(f"PODSUMOWANIE OPERACYJNE:")
-    print(f"Liczba wykrytych problemów: {issue_count}")
-    print(f"Wartość towaru objęta ryzykiem błędu: {total_risk:.2f} PLN")
-    print("-" * 30)
-    
-# --- URUCHOMIENIE PROGRAMU ---
+# --- URUCHOMIENIE PROCESU ---
 if __name__ == "__main__":
-    # 1. Pobierz dane
-    df_inventory = get_data()
+    FILE_NAME = "moje_zapas_testowe.xlsx" 
     
-    # 2. Oblicz ryzyko finansowe (tutaj, żeby dane były gotowe dla audytu)
-    df_inventory['risk_value'] = df_inventory['stock_count'].fillna(0) * df_inventory['unit_price']
+    # Przebieg procesu analitycznego
+    df_raw = get_data(FILE_NAME)
+    df_raw['risk_value'] = df_raw['stock_count'].fillna(0) * df_raw['unit_price']
     
-    # 3. Przeprowadź analizę audytową
-    df_audited = audit_logic(df_inventory)
+    df_audited = audit_logic(df_raw)
+    df_abc = abc_analysis(df_audited)
+    df_final = trend_analysis(df_abc)
     
-    # 4. Wyświetl analizę biznesową w konsoli
-    print_business_summary(df_audited)
+    # Raportowanie wyników
+    print_business_summary(df_final)
     
-    # 5. Wygeneruj wykres
-    visualize_anomalies(df_audited)
+    print("POZYCJE KRYTYCZNE (NISKIE POKRYCIE ZAPASEM):")
+    critical_items = df_final[df_final['inventory_trend'] == "RYZYKO_BRAKU"]
+    print(critical_items[['item_id', 'abc_class', 'days_on_hand']].head())
     
-    # 6. Wyślij raport do pliku Excel
-    export_to_excel(df_audited)
+    export_to_excel(df_final)
