@@ -1,18 +1,36 @@
 # 🌐 Global Supply Chain Analytics & Delay Prediction
 
-### 🎯 Project Overview
-This project simulates a global logistics network to identify bottleneck risks and predict delivery delays. It leverages synthetic shipment data to demonstrate how Data Engineering can optimize international trade routes.
+## 🎯 Project Overview
+This project simulates a high-scale global logistics network to identify bottleneck risks and predict delivery delays. By generating and analyzing a dataset of **50,000 international shipments**, it demonstrates how Data Engineering can be used to optimize trade routes and manage financial risk in real-time.
 
 ---
 
 ## 🚀 Key Features
-* **🛰️ Predictive Delay Modeling**: Algorithms that calculate "Risk Scores" based on port congestion and transit weather patterns.
-* **🗺️ Geospatial Analysis**: Mapping shipping routes from Asia to Europe to identify high-latency hubs.
-* **📉 Lead Time Optimization**: Statistical analysis of "Estimated vs Actual" arrival times to improve inventory buffer stocks.
+* **🛰️ Predictive Delay Modeling**: Custom algorithms calculating **Risk Scores** by weighing port congestion (e.g., Shanghai Hub) against total cargo value.
+* **💰 Financial Impact Analysis**: Automated calculation of **Total Value at Risk**, identifying millions of dollars tied up in delayed logistics hubs.
+* **📈 Statistical Deep-Dive**: Correlation matrices used to identify hidden dependencies between shipment weight, transit modes, and arrival latency.
+* **🗺️ Operational Visualization**: Data-driven plotting of shipping delays and cargo distributions to support executive decision-making.
 
 ---
 
 ## 🛠️ Tech Stack
-* **Language**: `Python 3.x`
-* **Analysis**: `Pandas`, `NumPy`.
-* **Visualization**: `Plotly` or `Folium` (for interactive maps).
+* **Language**: `Python 3.14` (Package management via `uv`)
+* **Data Engineering**: `Pandas` (Large-scale data manipulation), `NumPy` (Stochastic modeling).
+* **Statistical Visualization**: `Seaborn` (Heatmaps & Statistical plots), `Matplotlib` (Analytical distributions).
+* **Environment**: `Virtual Environments` (.venv) with PEP 668 compliance.
+
+---
+
+## 📊 Visual Insights & KPIs
+
+| Average Delay by Port | Risk Correlation Map | Cargo Value Distribution |
+| :--- | :--- | :--- |
+| ![Delays](./delay_analysis.png) | ![Correlation](./correlation_map.png) | ![Distribution](./cargo_distribution.png) |
+
+### 💡 Key Business Intelligence:
+> **Operational Insight**: The model identified that shipments originating from **Shanghai** face a 300% higher delay risk compared to other hubs. By quantifying the **Total Value at Risk**, logistics managers can proactively reroute high-priority cargo to minimize capital "freeze" during port congestions.
+
+---
+
+## 📂 Project Structure
+* `
