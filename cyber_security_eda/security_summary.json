@@ -1,0 +1,12 @@
+{
+    "analysis_timestamp": "2026-03-01 23:25:46",
+    "dataset_info": {
+        "total_logs": 2050,
+        "time_range": "2025-05-20 10:00:00 to 2025-05-21 18:08:30"
+    },
+    "security_metrics": {
+        "critical_401_errors": 50,
+        "top_suspicious_origin": "10.0.0.66",
+        "threat_level": "High"
+    }
+}

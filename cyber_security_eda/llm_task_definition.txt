@@ -1,0 +1,16 @@
+
+### LLM EVALUATION TASK DEFINITION
+Project: Synthetic Security Log Analysis
+
+Objective: 
+Evaluate the model's ability to identify a low-and-slow brute force attack within a noisy web server log.
+
+Expected Model Output:
+1. Identify the suspicious IP address.
+2. Characterize the attack type (Brute-Force / Unauthorized Access attempt).
+3. Determine the peak time of the attack based on request frequency.
+
+Ground Truth (Context for Evaluator):
+- Attacker IP: 10.0.0.66
+- Attack Window: Starts 30 minutes after initial log entry.
+- Key Indicator: 50 consecutive 401 status codes in a short timeframe.
