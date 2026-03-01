@@ -61,5 +61,4 @@ Witaj! To repozytorium dokumentuje moją ścieżkę przejścia z operacji logist
     python cyber_security_eda/synthetic_security_eda.py
     ```
 
----
-**Kontakt:** Zapraszam do zapoznania się z kodem i dyskusji na temat optymalizacji procesów danych!
+
