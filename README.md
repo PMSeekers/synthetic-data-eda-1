@@ -40,6 +40,16 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 * **AI/LLM Benchmarking:** Designing specialized prompt specifications for model evaluation.
 
 ### ⚙️ How to Run
-1. **Clone the repo:**
-   ```bash
-   git clone [https://github.com/PMSeekers/synthetic-data-eda-1.git](https://github.com/PMSeekers/synthetic-data-eda-1.git)
+⚙️ How to Run
+Clone the repository:
+
+Bash
+git clone https://github.com/PMSeekers/synthetic-data-eda-1.git
+Install all dependencies:
+
+Bash
+pip install -r requirements.txt
+Run a specific module (example):
+
+Bash
+python cyber_security_eda/synthetic_security_eda.py
