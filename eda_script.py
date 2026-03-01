@@ -60,13 +60,57 @@ def visualize_anomalies(df):
     plt.title("System ICQA: Wykrywanie anomalii w zapasach")
     plt.grid(True, alpha=0.3)
     plt.show()
+    
+# --- 4. EKSPORT DO EXCELA Z FORMATOWANIEM ---
+def export_to_excel(df, filename="Raport_ICQA.xlsx"):
+    writer = pd.ExcelWriter(filename, engine='xlsxwriter')
+    df.to_excel(writer, sheet_name='Audyt', index=False)
+    
+    workbook  = writer.book
+    worksheet = writer.sheets['Audyt']
 
+    # Definiujemy formaty kolorów
+    red_format = workbook.add_format({'bg_color': '#FFC7CE', 'font_color': '#9C0006'})
+    orange_format = workbook.add_format({'bg_color': '#FFEB9C', 'font_color': '#9C6500'})
+
+    # Automatyczne kolorowanie wierszy na podstawie statusu
+    for row_num in range(1, len(df) + 1):
+        status = df.iloc[row_num-1]['audit_status']
+        if any(err in status for err in ["NEGATIVE", "MISSING"]):
+            worksheet.set_row(row_num, None, red_format)
+        elif "ANOMALY" in status:
+            worksheet.set_row(row_num, None, orange_format)
+
+    writer.close()
+    print(f"\n[SUKCES] Raport został zapisany jako: {filename}")
+
+# --- 5. PODSUMOWANIE DLA MANAGERA ---
+def print_business_summary(df):
+    total_risk = df[df['audit_status'] != 'CLEAN']['risk_value'].sum()
+    issue_count = len(df[df['audit_status'] != 'CLEAN'])
+    
+    print("-" * 30)
+    print(f"PODSUMOWANIE OPERACYJNE:")
+    print(f"Liczba wykrytych problemów: {issue_count}")
+    print(f"Wartość towaru objęta ryzykiem błędu: {total_risk:.2f} PLN")
+    print("-" * 30)
+    
 # --- URUCHOMIENIE PROGRAMU ---
 if __name__ == "__main__":
+    # 1. Pobierz dane
     df_inventory = get_data()
+    
+    # 2. Oblicz ryzyko finansowe (tutaj, żeby dane były gotowe dla audytu)
+    df_inventory['risk_value'] = df_inventory['stock_count'].fillna(0) * df_inventory['unit_price']
+    
+    # 3. Przeprowadź analizę audytową
     df_audited = audit_logic(df_inventory)
     
-    print("\n--- FINALNY RAPORT AUDYTU ---")
-    print(df_audited[['item_id', 'category', 'stock_count', 'audit_status', 'required_action']])
+    # 4. Wyświetl analizę biznesową w konsoli
+    print_business_summary(df_audited)
     
+    # 5. Wygeneruj wykres
     visualize_anomalies(df_audited)
+    
+    # 6. Wyślij raport do pliku Excel
+    export_to_excel(df_audited)
