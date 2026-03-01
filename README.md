@@ -1,62 +1,62 @@
 # 🚀 Operations-Driven Data Engineering Portfolio
 
-Witaj! To repozytorium dokumentuje moją ścieżkę przejścia z operacji logistycznych (**Amazon Operations**) do budowy skalowalnych rozwiązań **Data Engineering**. Tworzę narzędzia inspirowane realnymi wyzwaniami łańcucha dostaw, koncentrując się na generowaniu danych syntetycznych, modelowaniu ryzyka i automatyzacji audytu.
+Welcome! This repository documents my transition from **Amazon Operations** to building scalable **Data Engineering** solutions. I develop tools inspired by real-world logistical challenges, focusing on synthetic data generation, risk modeling, and audit automation.
 
 ---
 
-## 📂 Przegląd Projektów
+## 📂 Projects Overview
 
 ### 🛡️ [Cyber-Security Anomaly Detection](./cyber_security_eda/)
-**Generowanie syntetycznych logów do ewaluacji modeli AI pod kątem bezpieczeństwa.**
-* **Logika biznesowa:** Symulacja ataku typu **Brute-Force** (Status 401) ukrytego w szumie ponad 2000 logów serwera.
-* **Impact:** Dostarczanie zbiorów typu "Ground Truth" oraz definicji zadań dla LLM, aby benchmarkować rozumowanie AI w wykrywaniu zagrożeń.
+**Scenario-based synthetic log generation for AI security model evaluation.**
+* **Business Logic:** Simulation of a **Brute-Force attack** (Status 401) hidden within 2,000+ noisy web server logs.
+* **Impact:** Provides "Ground Truth" datasets and specialized LLM task definitions to benchmark AI reasoning in threat detection.
 * **Stack:** `Python`, `JSON`, `Seaborn`.
 
 ### 🌐 [Global Supply Chain Analytics](./supply_chain_analytics/)
-**Modelowanie predykcyjne opóźnień w dostawach dla 50,000 przesyłek międzynarodowych.**
-* **Logika biznesowa:** Stochastyczna symulacja kongestii w portach i zakłóceń pogodowych na szlakach morskich.
-* **Impact:** Kwantyfikacja **"Total Value at Risk"**, umożliwiająca priorytetyzację ładunków o wysokiej wartości podczas zatorów.
+**Predictive modeling of delivery delays across 50,000 international shipments.**
+* **Business Logic:** Stochastic simulation of port congestion and maritime weather disruptions.
+* **Impact:** Quantifies **"Total Value at Risk"** (TVaR) to prioritize high-value cargo during supply chain bottlenecks.
 * **Stack:** `Python 3.12+`, `Pandas`, `Seaborn`.
 
 ### 💳 [Fintech Fraud Detection Engine](./fintech_fraud_engine/)
-**Symulacja 100,000 transakcji w celu testowania wzorców wykrywania anomalii.**
-* **Logika biznesowa:** Scenariusze "Impossible Travel" oraz przejęć kont (Account Takeover - ATO).
-* **Impact:** Identyfikacja sygnatur oszustw na wolumenie transakcyjnym rzędu **~2.4 mln PLN**.
+**High-fidelity simulation of 100,000 transactions to test anomaly detection patterns.**
+* **Business Logic:** Simulates "Impossible Travel" and Account Takeover (ATO) scenarios.
+* **Impact:** Identifies fraudulent signatures across a simulated transaction volume of **~2.4M PLN**.
 * **Stack:** `Python`, `NumPy`, `Seaborn`.
 
 ### 📦 [Inventory Quality Audit (ICQA) Logic](./inventory_quality_audit/)
-**Automatyzacja wykrywania anomalii w logistyce magazynowej (Digitalizacja Quality Workflows).**
-* **Logika biznesowa:** Wykrywanie stanów ujemnych, niespójności w lokalizacjach (bins) i wzorców "dirty data".
-* **Kontekst:** Pythonowa automatyzacja procesów identyfikacji rozbieżności oparta na doświadczeniu w **Amazon**.
+**Automated anomaly detection for warehouse logistics (Digitalizing Quality Workflows).**
+* **Business Logic:** Detects negative stock, bin inconsistencies, and "dirty data" patterns.
+* **Context:** A Python-based automation of discrepancy identification processes based on firsthand experience at **Amazon**.
 * **Stack:** `Python`, `Pandas`, `XlsxWriter`.
 
 ---
 
-## 🛠️ Stack Techniczny i Kompetencje
+## 🛠️ Technical Stack & Competencies
 
-| Kategoria | Technologie |
+| Category | Technologies |
 | :--- | :--- |
-| **Języki** | Python 3.12+ (Zarządzanie przez `uv`) |
-| **Data Processing** | Zaawansowany Pandas (operacje wektorowe, Time-series), NumPy |
-| **Wizualizacja** | Seaborn, Matplotlib (Heatmapy ryzyka, rozkłady gęstości) |
-| **AI/LLM** | Projektowanie specyfikacji promptów do ewaluacji modeli |
+| **Languages** | Python 3.12+ (Managed via `uv`) |
+| **Data Processing** | Advanced Pandas (Vectorized operations, Time-series), NumPy |
+| **Visualization** | Seaborn, Matplotlib (Risk Heatmaps, Density Plots) |
+| **AI/LLM** | Prompt engineering and specification design for model evaluation |
 
 ---
 
-## ⚙️ Szybki Start (Quick Start)
+## ⚙️ Quick Start
 
-1.  **Sklonuj repozytorium:**
+1. **Clone the repository:**
     ```bash
     git clone [https://github.com/PMSeekers/synthetic-data-eda-1.git](https://github.com/PMSeekers/synthetic-data-eda-1.git)
     cd synthetic-data-eda-1
     ```
 
-2.  **Zainstaluj zależności:**
+2.  **Install all dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-3.  **Uruchom wybrany moduł (przykład):**
+3.  **Run a specific module (example):**
     ```bash
     python cyber_security_eda/synthetic_security_eda.py
     ```
