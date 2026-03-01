@@ -33,4 +33,9 @@ This project simulates a high-scale global logistics network to identify bottlen
 ---
 
 ## 📂 Project Structure
-* `
+* `supply_chain_gen.py`: Core simulation engine and analytical script.
+* `global_supply_chain_data.csv`: Generated dataset (50k records) for external BI tools.
+* `*.png`: Automated visual reports for documentation (Delays, Correlations, Distributions).
+
+---
+*Developed as part of the PMSeekers Data Portfolio.*
