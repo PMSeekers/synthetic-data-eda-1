@@ -12,7 +12,7 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 * **Impact:** Provides "Ground Truth" datasets and specialized **LLM Task Definitions** to benchmark AI reasoning in threat detection.
 * **Tech:** `Python`, `JSON` (Automated Reporting), `Seaborn` (Attack Timelines).
 
-### 🌐 [Global Supply Chain Analytics](./Global%20Supply%20Chain%20Dashboard/)
+### 🌐 [Global Supply Chain Analytics](./supply_chain_analytics/)
 **Predictive modeling of delivery delays across 50,000 international shipments.**
 * **Core Logic:** Stochastic simulation of port congestion and maritime weather disruptions.
 * **Business Impact:** Quantifies **"Total Value at Risk"** to prioritize high-value cargo during bottlenecks.
