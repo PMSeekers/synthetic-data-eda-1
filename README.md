@@ -39,7 +39,6 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 * **Visualization:** Seaborn & Matplotlib (Heatmaps, Risk Density, Histograms).
 * **AI/LLM Benchmarking:** Designing specialized prompt specifications and ground-truth metadata for model evaluation.
 * **Focus:** Data Scalability (50k+ records) and Business Intelligence (KPI tracking).
-* **Installation: pip install -r requirements.txt
 
 ---
 
