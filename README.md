@@ -16,7 +16,7 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 **Predictive modeling of delivery delays across 50,000 international shipments.**
 * **Core Logic:** Stochastic simulation of port congestion and maritime weather disruptions.
 * **Business Impact:** Quantifies **"Total Value at Risk"** to prioritize high-value cargo during bottlenecks.
-* **Tech:** `Python 3.14`, `Pandas`, `Seaborn`.
+* **Tech:** `Python 3.12+`, `Pandas`, `Seaborn`.
 
 ### 💳 [Fintech Fraud Detection Engine](./fintech_fraud_engine/)
 **High-fidelity simulation of 100,000 transactions to test anomaly detection patterns.**
@@ -28,23 +28,17 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 **Automated anomaly detection for warehouse logistics, digitizing manual quality workflows.**
 * **Core Logic:** Detects negative stock, bin inconsistencies, and "dirty data" patterns.
 * **Context:** A Python-based automation of discrepancy identification processes observed during my time at **Amazon**.
-* **Tech:** `Python`, `Pandas`.
+* **Tech:** `Python`, `Pandas`, `XlsxWriter`.
 
 ---
 
-## 🛠️ Technical Core
+## 🛠️ Technical Core & Quick Start
 
-* **Languages:** Python 3.14 (Managed via `uv`)
+* **Languages:** Python 3.12+ (Managed via `uv`)
 * **Data Tools:** Advanced Pandas (Vectorized operations, Time-series), NumPy.
 * **Visualization:** Seaborn & Matplotlib (Heatmaps, Risk Density, Histograms).
-* **AI/LLM Benchmarking:** Designing specialized prompt specifications and ground-truth metadata for model evaluation.
-* **Focus:** Data Scalability (50k+ records) and Business Intelligence (KPI tracking).
+* **AI/LLM Benchmarking:** Designing specialized prompt specifications for model evaluation.
 
----
-
-## 💡 Why This Background Matters
-
-As a **Data-Driven Operations Specialist**, I bridge the gap between "warehouse floor reality" and "logical data structures." My background in **Amazon Fulfillment** allows me to design datasets that mimic real-world complexity—ensuring that data pipelines are tested against actual edge cases, not just "happy-path" scenarios.
-
----
-**Author:** Patryk (PMSeekers)
+### ⚙️ How to Run
+1. **Clone the repo:** ```bash
+   git clone [https://github.com/PMSeekers/synthetic-data-eda-1.git](https://github.com/PMSeekers/synthetic-data-eda-1.git)
