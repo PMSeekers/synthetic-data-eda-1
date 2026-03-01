@@ -1,34 +1,39 @@
-📦 Inventory Quality Audit (ICQA) & Anomaly Detection
-🎯 Project Overview
-Ten projekt to zautomatyzowany system audytu stanów magazynowych, inspirowany standardami Amazon ICQA (Inventory Control & Quality Assurance). Skrypt przekłada moją wiedzę operacyjną na skalowalne rozwiązanie programistyczne, które identyfikuje błędy techniczne w danych logistycznych i przygotowuje je do dalszej analizy lub trenowania modeli AI.
+# 🚀 Synthetic Data Engineering & Quality Audit Portfolio
 
-🚀 Key Features
-🔍 Automated Anomaly Detection
-Z-Score Analysis: Statystyczne wykrywanie odchyleń w ilościach towaru (Outliers).
+Welcome! This repository demonstrates a transition from operational excellence at **Amazon ICQA** to scalable **Data Engineering** solutions. I specialize in creating high-fidelity synthetic datasets and automated audit systems designed to benchmark LLMs and data pipelines.
 
-Logical Validation: Natychmiastowe flagowanie stanów ujemnych oraz nadstanów (Critical Issues).
+---
 
-Missing Data Recovery: Automatyczna imputacja brakujących rekordów na podstawie mediany kategorii, zapewniająca ciągłość zbioru danych.
+## 📂 Projects in this Repository
 
-📊 Business Intelligence & Reporting
-ABC Analysis: Klasyfikacja asortymentu według zasady Pareto (Kluczowe vs Niskie zapasy).
+### 💳 [Fintech Fraud Detection Engine](./fintech_fraud_engine/)
+A high-scale simulation of 100,000 banking transactions designed to test AI's ability to reason through complex fraud patterns.
 
-DOH (Days on Hand): Prognozowanie trendów wyczerpania zapasów i wykrywanie "martwego towaru".
+* **Core Logic:** Simulates "Impossible Travel" and "Account Takeover" (ATO) scenarios.
+* **Impact:** Identifies **88.8%** of fraudulent activity, simulating **~2.4M PLN** in blocked risk.
+* **Tech Stack:** `Python`, `Pandas`, `Seaborn` (Logarithmic Analysis), `JSON`.
 
-Excel Automation: Generowanie raportu z automatycznym kolorowaniem rekordów wymagających pilnej interwencji.
+### 📦 [Inventory Quality Audit (ICQA)](./inventory_quality_audit/)
+Automated anomaly detection for warehouse logistics, digitizing manual quality control workflows inspired by my time at Amazon.
 
-💼 Business Context: From Amazon to Code
-W latach 2025-2026 w Amazon odpowiadałem za identyfikację błędów technicznych w systemach magazynowych. Ten skrypt to cyfrowa transformacja tamtych procesów:
+* **Core Logic:** Detects negative stock values, logical bin inconsistencies, and "dirty data" patterns.
+* **Context:** Direct translation of my 2025-2026 experience at **Amazon** into a scalable Python solution.
+* **Tech Stack:** `Python`, `Pandas`, `XlsxWriter`.
 
-Manual Logic → Python Script: Zamiast ręcznego filtrowania, algorytm wykonuje audyt w milisekundy.
+---
 
-Scalability: Narzędzie radzi sobie z tysiącami rekordów, które mogą służyć jako czyste dane wejściowe dla modeli LLM.
+## 🛠️ Technical Core
 
-🛠️ Tech Stack
-Language: Python 3.x
+* **Languages:** Python 3.x
+* **Data Tools:** Advanced Pandas (Vectorized operations, GroupBy, Time-series analysis).
+* **Visualization:** Seaborn & Matplotlib for risk density and audit reporting.
+* **Focus:** Scalability (100k+ records) and AI-Readiness (JSON exports for LLM training).
 
-Core Libraries: Pandas (Data manipulation), NumPy (Stats), XlsxWriter (Reporting).
+---
 
-Visualization: Seaborn, Matplotlib.
+## 💡 Business Impact
 
-Environment: VS Code.
+As a **Synthetic Data Engineer**, I bridge the gap between "raw numbers" and "logical truth." My background in **Inventory Control** allows me to design data environments that mimic real-world complexity, ensuring that AI models are tested against edge cases, not just "happy-path" data.
+
+---
+**Author:** PMSeekers
