@@ -32,14 +32,3 @@ Core Libraries: Pandas (Data manipulation), NumPy (Stats), XlsxWriter (Reporting
 Visualization: Seaborn, Matplotlib.
 
 Environment: VS Code.
-
-⚙️ How to Run
-Upewnij się, że masz zainstalowane biblioteki:
-
-Bash
-pip install pandas numpy openpyxl xlsxwriter
-Uruchom skrypt główny:
-
-Bash
-python eda_script.py
-Sprawdź wygenerowany plik Raport_Magazynowy_Final.xlsx.
