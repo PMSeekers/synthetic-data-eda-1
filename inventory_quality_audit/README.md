@@ -29,7 +29,8 @@ During **2025-2026 at Amazon**, I was responsible for identifying technical disc
 
 ---
 
-## ⚙️ How to Run
-1. Install dependencies:
-   ```bash
-   pip install pandas numpy xlsxwriter openpyxl
+## ⚙️ Quick Start
+This module is part of the main repository environment. 
+To run the audit logic individually:
+1. Ensure dependencies are installed (`pip install -r ../requirements.txt`)
+2. Run: `python icqa_logic.py`
