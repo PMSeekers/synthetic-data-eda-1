@@ -40,5 +40,6 @@ Welcome! This repository demonstrates my transition from **Amazon Operations** t
 * **AI/LLM Benchmarking:** Designing specialized prompt specifications for model evaluation.
 
 ### ⚙️ How to Run
-1. **Clone the repo:** ```bash
+1. **Clone the repo:**
+   ```bash
    git clone [https://github.com/PMSeekers/synthetic-data-eda-1.git](https://github.com/PMSeekers/synthetic-data-eda-1.git)
